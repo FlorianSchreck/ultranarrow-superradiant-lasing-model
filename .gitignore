@@ -1,0 +1,31 @@
+# Python build and cache artifacts
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+
+# Local environments
+.venv/
+venv/
+env/
+
+# Generated simulation outputs
+results/
+
+# Local source-paper copies and extracted text.
+# Keep these locally if useful, but do not redistribute unless licensing permits it.
+*.pdf
+main.txt
+supp.txt
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -1,0 +1,57 @@
+name: our_clock
+
+# All frequency-like inputs in this file are ordinary Hz.
+# The loader converts them to angular rates internally.
+# The default analysis scripts use the `minimum_linewidth` branch selector,
+# because this parameter set has multiple physical steady-state branches.
+system:
+  atom_number: 2.2e5
+  g_hz: 23.2e3
+  kappa_hz: 6.6e6
+  gamma_hz: 7.5e3
+  delta_hz: 3.0e5
+  omega_a_hz: 0.0
+  omega_c_hz: 0.0
+  # Alternative lab-facing inputs:
+  # magnetic_field_gauss: 0.143
+  # delta_hz_per_gauss: 2.1e6
+  # linear_cavity_length: 3e-2 # meter
+  # cavity_mirror_radius_of_curvature: -0.1 # meter
+  # mode_waist: 88e-6 # meter
+  # finesse: 1045
+  # linewidth: 6.6e6 # Hz; = kappa/(2 Pi)
+  # single_atom_cooperativity: 0.013
+  # normal_mode_splitting: 11.5e6 # Hz, not angular Hz, for ground state atoms 
+  # repumping_rate: we get a few 10nW out of cavity, which means we have a repumping rate of 1e10 atoms/s. With 2.2e5 atoms, this means per atom we have a rate of 45e3, or eta_over_gamma of 6.
+  
+
+
+pump:
+  eta_over_gamma_values:
+    - 0.1
+    - 0.5
+    - 1.0
+    - 2.0
+    - 3.0
+    - 5.0
+    - 7.0
+
+spectrum:
+  filter_beta_hz: 1.0
+  filter_chi_hz: 50.0
+  freq_min_hz: -1.0e6
+  freq_max_hz: 1.0e6
+  freq_points: 2401
+
+linewidth:
+  focus_window_hz: 5.0e4
+
+numerics:
+  solver: least_squares
+  tolerance: 1.0e-10
+  max_nfev: 20000
+  continuation: true
+
+figures:
+  save_dir: results/our_clock
+  style: default

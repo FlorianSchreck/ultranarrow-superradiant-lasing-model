@@ -1,0 +1,42 @@
+name: paper_2021
+
+# All frequency-like inputs in this file are ordinary Hz.
+# The loader converts them to angular rates internally.
+system:
+  atom_number: 2.5e5
+  g_hz: 7.5e3
+  kappa_hz: 1.5e5
+  gamma_hz: 7.5e3
+  delta_hz: 3.0e5
+  omega_a_hz: 0.0
+  omega_c_hz: 0.0
+
+pump:
+  eta_over_gamma_values:
+    - 0.1
+    - 0.5
+    - 1.0
+    - 2.0
+    - 3.0
+    - 5.0
+    - 7.0
+
+spectrum:
+  filter_beta_hz: 1.0
+  filter_chi_hz: 50.0
+  freq_min_hz: -1.0e6
+  freq_max_hz: 1.0e6
+  freq_points: 2401
+
+linewidth:
+  focus_window_hz: 5.0e4
+
+numerics:
+  solver: least_squares
+  tolerance: 1.0e-10
+  max_nfev: 20000
+  continuation: true
+
+figures:
+  save_dir: results/paper_2021
+  style: default
