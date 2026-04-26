@@ -29,6 +29,7 @@ The full driven 102-variable Figure 2 workflow is not the default production pat
 - `CALIBRATION.md`: calibration history, current paper/clock status, and caveats.
 
 Generated output is written under `results/` and is intentionally ignored by git.
+Curated reference outputs for the paper and current clock configuration are checked in under `results/`.
 
 ## Installation
 
@@ -50,6 +51,13 @@ Generate the paper Figure-3-like sweep:
 
 ```powershell
 python scripts\make_figure3.py --config configs\paper_2021.yaml --random-starts 0
+```
+
+Reference output:
+
+```text
+results/paper_2021/figure3_like.png
+results/paper_2021/figure3_sweep.npz
 ```
 
 Inspect the calibrated branch table:
@@ -76,6 +84,13 @@ Generate the same outputs for the experiment config:
 ```powershell
 python scripts\make_figure3.py --config configs\our_clock.yaml --random-starts 0
 python scripts\scan_branch_table.py --config configs\our_clock.yaml --random-starts 0
+```
+
+Reference output:
+
+```text
+results/our_clock/figure3_like.png
+results/our_clock/figure3_sweep.npz
 ```
 
 Compare paper and clock configs:
