@@ -6,6 +6,8 @@ Config-driven Python tools for reproducing and adapting the reduced mean-field s
 
 The repository currently focuses on the reduced no-optical-coherence model from the supplemental material, especially the steady states, filter-cavity spectra, and Eq. (S43) linewidth diagnostics used for Figure 3 / Figure S4-style comparisons.
 
+See `RESULTS.md` for the current numerical summary, embedded result figures, the `eta/gamma = 6` clock operating-point table, cavity-pulling discussion, and calibration summary.
+
 All code and documentation created by Codex.
 
 ## What Is Implemented
@@ -26,6 +28,7 @@ The full driven 102-variable Figure 2 workflow is not the default production pat
 - `src/moelmer_model/`: reusable model, solver, spectrum, linewidth, and sweep code.
 - `scripts/`: command-line workflows and diagnostics.
 - `tests/`: regression tests for the reduced and full-layout consistency paths.
+- `RESULTS.md`: current summarized paper/clock results and interpretation.
 - `CALIBRATION.md`: calibration history, current paper/clock status, and caveats.
 
 Generated output is written under `results/` and is intentionally ignored by git.
