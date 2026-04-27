@@ -19,12 +19,15 @@ env/
 results/**
 !results/
 !results/*.png
+!results/*.csv
 !results/paper_2021/
 !results/paper_2021/figure3_like.png
 !results/paper_2021/figure3_sweep.npz
+!results/paper_2021/*.csv
 !results/our_clock/
 !results/our_clock/figure3_like.png
 !results/our_clock/figure3_sweep.npz
+!results/our_clock/*.csv
 
 # Local source-paper copies and extracted text.
 # Keep these locally if useful, but do not redistribute unless licensing permits it.

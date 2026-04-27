@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 from dataclasses import replace
+from pathlib import Path
 
 import numpy as np
 from scipy.optimize import minimize_scalar
@@ -34,6 +35,11 @@ def parse_args() -> argparse.Namespace:
         type=float,
         default=2.0e5,
         help="Minimum half-width around the linearized peak estimate used for peak maximization.",
+    )
+    parser.add_argument(
+        "--output",
+        default=None,
+        help="Optional CSV output path. Defaults to results/<config-name>/cavity_pulling.csv.",
     )
     return parser.parse_args()
 
@@ -110,8 +116,11 @@ def main() -> None:
     args = parse_args()
     config = load_config(args.config)
     rows = []
+    output = Path(args.output) if args.output is not None else config.result_dir / "cavity_pulling.csv"
+    output.parent.mkdir(parents=True, exist_ok=True)
 
     print("detuning_hz,peak_frequency_hz,local_pulling,linewidth_hz,photon_number,residual")
+    table_lines = ["detuning_hz,peak_frequency_hz,local_pulling,linewidth_hz,photon_number,residual"]
     for detuning_hz in args.detunings_hz:
         detuned = _detuned_config(config, detuning_hz)
         search = find_reduced_branches(detuned, args.eta_over_gamma, random_starts=args.random_starts)
@@ -119,7 +128,7 @@ def main() -> None:
         peak_hz = _central_peak_frequency_hz(detuned, branch, detuning_hz, args.search_half_width_hz)
         linewidth_hz = semianalytic_linewidth_hz(detuned, branch)
         rows.append((float(detuning_hz), peak_hz))
-        print(
+        line = (
             f"{detuning_hz:.9g},"
             f"{peak_hz:.9g},"
             f"{peak_hz / detuning_hz:.9g},"
@@ -127,6 +136,8 @@ def main() -> None:
             f"{branch.photon_number:.9g},"
             f"{branch.residual_norm:.9g}"
         )
+        print(line)
+        table_lines.append(line)
 
     detunings = np.asarray([row[0] for row in rows], dtype=float)
     peaks = np.asarray([row[1] for row in rows], dtype=float)
@@ -135,6 +146,13 @@ def main() -> None:
     print(f"pulling_through_origin,{through_origin:.9g}")
     print(f"pulling_linear_fit,{linear_slope:.9g}")
     print(f"linear_fit_intercept_hz,{linear_intercept:.9g}")
+    table_lines.append("")
+    table_lines.append("metric,value")
+    table_lines.append(f"pulling_through_origin,{through_origin:.9g}")
+    table_lines.append(f"pulling_linear_fit,{linear_slope:.9g}")
+    table_lines.append(f"linear_fit_intercept_hz,{linear_intercept:.9g}")
+    output.write_text("\n".join(table_lines) + "\n", encoding="utf-8")
+    print(f"table,{output}")
 
 
 if __name__ == "__main__":

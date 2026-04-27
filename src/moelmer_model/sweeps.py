@@ -74,3 +74,26 @@ def save_sweep(path: str | Path, arrays: dict[str, np.ndarray]) -> None:
     target = Path(path)
     target.parent.mkdir(parents=True, exist_ok=True)
     np.savez(target, **arrays)
+
+
+def save_sweep_table(path: str | Path, arrays: dict[str, np.ndarray]) -> None:
+    target = Path(path)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    names = list(arrays)
+    if not names:
+        raise ValueError("Cannot save an empty sweep table.")
+
+    row_count = len(arrays[names[0]])
+    for name in names:
+        if len(arrays[name]) != row_count:
+            raise ValueError(f"Column {name!r} has length {len(arrays[name])}, expected {row_count}.")
+
+    table = np.column_stack([arrays[name] for name in names])
+    np.savetxt(
+        target,
+        table,
+        delimiter=",",
+        header=",".join(names),
+        comments="",
+        fmt="%.12g",
+    )

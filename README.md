@@ -58,6 +58,7 @@ Reference output:
 ```text
 results/paper_2021/figure3_like.png
 results/paper_2021/figure3_sweep.npz
+results/paper_2021/figure3_sweep.csv
 ```
 
 Inspect the calibrated branch table:
@@ -91,7 +92,10 @@ Reference output:
 ```text
 results/our_clock/figure3_like.png
 results/our_clock/figure3_sweep.npz
+results/our_clock/figure3_sweep.csv
 ```
+
+Result-generating scripts write CSV tables alongside figures and `.npz` cache files. For example, comparison runs produce `compare_cached.csv` in each config result directory and a combined `results/compare_<config-a>_vs_<config-b>.csv` table next to the comparison figure.
 
 Compare paper and clock configs:
 

@@ -10,7 +10,7 @@ from moelmer_model.config import load_config
 from moelmer_model.linewidth import extract_linewidth
 from moelmer_model.reduced_model import find_reduced_branches, select_branch
 from moelmer_model.spectrum import compute_spectrum
-from moelmer_model.sweeps import run_eta_sweep, save_sweep
+from moelmer_model.sweeps import run_eta_sweep, save_sweep, save_sweep_table
 
 
 def parse_args() -> argparse.Namespace:
@@ -40,6 +40,7 @@ def main() -> None:
         max_residual=args.max_residual,
     )
     save_sweep(result_dir / "figure3_sweep.npz", sweep)
+    save_sweep_table(result_dir / "figure3_sweep.csv", sweep)
 
     target_etas = [0.1, 0.5, 5.0]
     selected_states = []
