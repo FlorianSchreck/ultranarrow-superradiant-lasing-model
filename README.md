@@ -6,7 +6,7 @@ Config-driven Python tools for reproducing and adapting the reduced mean-field s
 
 The repository currently focuses on the reduced no-optical-coherence model from the supplemental material, especially the steady states, filter-cavity spectra, and Eq. (S43) linewidth diagnostics used for Figure 3 / Figure S4-style comparisons.
 
-See `RESULTS.md` for the current numerical summary, embedded result figures, the `eta/gamma = 6` clock operating-point table, cavity-pulling discussion, and calibration summary.
+See [RESULTS.md](RESULTS.md) for the current numerical summary, embedded result figures, the `eta/gamma = 6` clock operating-point table, cavity-pulling discussion, and calibration summary.
 
 All code and documentation created by Codex.
 
@@ -168,6 +168,3 @@ Probe sensitivity to parameter conventions:
 python scripts\convention_sensitivity.py --config configs\paper_2021.yaml --eta-over-gamma 5 --random-starts 8
 ```
 
-## Notes On Source Papers
-
-Local copies of paper PDFs and extracted text are ignored by git. Team members should obtain papers from the publisher/arXiv/library access rather than redistributing copyrighted PDFs in this repository.
