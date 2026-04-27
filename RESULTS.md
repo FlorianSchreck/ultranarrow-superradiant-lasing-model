@@ -20,10 +20,6 @@ Our clock parameters:
 
 ![Our clock Figure-3-like sweep](results/our_clock/figure3_like.png)
 
-Direct comparison:
-
-![Paper versus clock comparison](results/compare_paper_2021_vs_our_clock.png)
-
 For `configs/our_clock.yaml`, the narrow-branch Eq. (S43) linewidth is minimized around `eta/gamma = 5-7`. The operating point `eta/gamma ~= 6` is therefore close to the broad optimum in this model.
 
 ## Our Clock Operating Point
