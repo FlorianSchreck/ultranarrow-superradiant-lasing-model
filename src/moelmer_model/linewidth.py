@@ -32,7 +32,16 @@ class LinewidthTerms:
     required_a_bb_for_zero: float | None = None
 
 
-def implicit_linewidth_hz(config: RunConfig, state: ReducedSteadyState) -> float | None:
+@dataclass
+class ImplicitLinewidthDiagnostics:
+    semianalytic_hz: float
+    residual_at_zero_rad_s: float
+    linearized_root_hz: float | None
+    linearized_root_magnitude_hz: float | None
+    positive_roots_hz: tuple[float, ...]
+
+
+def _implicit_linewidth_equation(config: RunConfig, state: ReducedSteadyState):
     eta = state.eta
     gamma = config.gamma
     delta = config.delta
@@ -51,8 +60,13 @@ def implicit_linewidth_hz(config: RunConfig, state: ReducedSteadyState) -> float
     def equation(linewidth: float) -> float:
         return linewidth - (kappa / 2.0 + im_z(linewidth))
 
+    return equation
+
+
+def implicit_linewidth_hz(config: RunConfig, state: ReducedSteadyState) -> float | None:
+    equation = _implicit_linewidth_equation(config, state)
     low = 0.0
-    high = max(kappa * 10.0, eta * 10.0, abs(delta) * 10.0)
+    high = max(config.kappa * 10.0, state.eta * 10.0, abs(config.delta) * 10.0)
     f_low = equation(low)
     f_high = equation(high)
     if f_low == 0.0:
@@ -64,6 +78,61 @@ def implicit_linewidth_hz(config: RunConfig, state: ReducedSteadyState) -> float
     if root <= 0.0:
         return None
     return rad_s_to_hz(root)
+
+
+def implicit_linewidth_diagnostics(
+    config: RunConfig,
+    state: ReducedSteadyState,
+    min_hz: float = 1.0e-6,
+    max_hz: float | None = None,
+    samples: int = 2000,
+) -> ImplicitLinewidthDiagnostics:
+    equation = _implicit_linewidth_equation(config, state)
+    semianalytic_hz = semianalytic_linewidth_hz(config, state)
+    if semianalytic_hz is None:
+        semianalytic_hz = float("nan")
+
+    residual_at_zero = equation(0.0)
+    step_rad_s = 2.0 * np.pi * max(min_hz, 1.0e-12)
+    derivative_at_zero = (equation(step_rad_s) - equation(-step_rad_s)) / (2.0 * step_rad_s)
+    linearized_root_hz = None
+    linearized_root_magnitude_hz = None
+    if derivative_at_zero != 0.0 and np.isfinite(derivative_at_zero):
+        root_rad_s = -residual_at_zero / derivative_at_zero
+        linearized_root_hz = rad_s_to_hz(root_rad_s)
+        linearized_root_magnitude_hz = abs(linearized_root_hz)
+
+    upper_hz = max_hz
+    if upper_hz is None:
+        upper_hz = rad_s_to_hz(max(config.kappa * 10.0, state.eta * 10.0, abs(config.delta) * 10.0))
+
+    grid_hz = np.concatenate(([0.0], np.logspace(np.log10(min_hz), np.log10(upper_hz), samples)))
+    grid_rad_s = 2.0 * np.pi * grid_hz
+    positive_roots: list[float] = []
+    previous_x = float(grid_rad_s[0])
+    previous_f = equation(previous_x)
+    for x in grid_rad_s[1:]:
+        current_x = float(x)
+        current_f = equation(current_x)
+        if previous_f == 0.0 and previous_x > 0.0:
+            positive_roots.append(rad_s_to_hz(previous_x))
+        elif current_f == 0.0 and current_x > 0.0:
+            positive_roots.append(rad_s_to_hz(current_x))
+        elif previous_f * current_f < 0.0:
+            root = brentq(equation, previous_x, current_x, xtol=1.0e-12, rtol=1.0e-12, maxiter=200)
+            if root > 0.0:
+                positive_roots.append(rad_s_to_hz(root))
+        previous_x = current_x
+        previous_f = current_f
+
+    unique_roots = tuple(dict.fromkeys(round(root, 12) for root in positive_roots))
+    return ImplicitLinewidthDiagnostics(
+        semianalytic_hz=float(semianalytic_hz),
+        residual_at_zero_rad_s=float(residual_at_zero),
+        linearized_root_hz=None if linearized_root_hz is None else float(linearized_root_hz),
+        linearized_root_magnitude_hz=None if linearized_root_magnitude_hz is None else float(linearized_root_magnitude_hz),
+        positive_roots_hz=unique_roots,
+    )
 
 
 def semianalytic_linewidth_terms(config: RunConfig, state: ReducedSteadyState) -> LinewidthTerms:

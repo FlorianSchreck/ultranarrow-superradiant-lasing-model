@@ -34,6 +34,8 @@ The high-photon branch reaches the bright-dark coherence scale required for the 
 - Branch discovery also includes deterministic medium-photon seeds, which are needed for the current `configs/our_clock.yaml` narrow branch.
 - Branch selection supports `minimum_linewidth`, which is the safer default for comparing narrow-lasing branches across different parameter sets. For the clock parameters, `highest_photon_number` can select a different physical branch with a much larger linewidth.
 - Numerical FWHM extraction now refuses to report a broad-grid width when the plotted spectrum grid cannot resolve the Hz-scale Eq. (S43) central peak. In that case the saved `fwhm_hz` is `NaN`, and `semianalytic_hz` should be used for the central linewidth estimate.
+- A dedicated narrow-filter scan was tested for `configs/our_clock.yaml` at `eta/gamma = 6` with `filter_chi_hz = 1`, `filter_beta_hz = 0.1`, `span_hz = 200000`, and `step_hz = 0.5`. Runtime was only `~7 s`, so the computation is cheap, but the raw and edge-baseline-subtracted FWHM values were `~42.8 kHz` and `~50.3 kHz`, while Eq. (S43) gives `6.45 Hz`. This filter-cavity FWHM is therefore measuring the broad analyzer/gain response, not the intrinsic phase-diffusion linewidth. Do not use total filter-cavity spectrum FWHM as a linewidth crosscheck without a different pole or central-feature extraction.
+- `scripts/linewidth_root_diagnostic.py` now compares Eq. (S43), the local near-zero linearization of the implicit linewidth equation, and all positive full implicit roots over a log-spaced search range. For `configs/our_clock.yaml` at `eta/gamma = 6`, it reports Eq. (S43) `6.45 Hz`, local implicit-root magnitude `6.16 Hz`, and the only positive full implicit root at `5.61 MHz`. This supports the interpretation that the Hz-scale linewidth is the local central-line pole/cancellation, while the positive full implicit root is a different broad-scale solution and should not be used as the emitted linewidth.
 
 ## Current Diagnostic
 
@@ -54,7 +56,7 @@ The Eq. (S43) population and coherence terms nearly cancel:
 - numerator: `~367 rad/s`
 - Eq. (S43) linewidth: `~11.4 Hz`
 
-This is now in the same linewidth scale as the paper's reported ultranarrow central peak. The direct implicit Eq. (S42) root still returns a large root for this branch, so the remaining open issue is the exact interpretation of the implicit linewidth equation versus the small-linewidth Eq. (S43) expression used for the plotted central peak.
+This is now in the same linewidth scale as the paper's reported ultranarrow central peak. The direct positive implicit Eq. (S42) root still returns a large broad-scale root for this branch; the useful central-line crosscheck is the near-zero local linearization of the same implicit equation, which agrees with Eq. (S43) at the few-percent level for the clock operating point. Do not interpret the large positive implicit root as the emitted linewidth.
 
 At `eta/gamma = 5`, zeroing the Eq. (S43) numerator would require only a small shift:
 
@@ -113,6 +115,18 @@ Linewidth-term diagnostic:
 python scripts\linewidth_terms.py --config configs\paper_2021.yaml --eta-over-gamma 5 --random-starts 32
 ```
 
+Implicit linewidth root diagnostic:
+
+```powershell
+python scripts\linewidth_root_diagnostic.py --config configs\our_clock.yaml --eta-over-gamma 6 --random-starts 16
+```
+
+Narrow-filter FWHM dead-end diagnostic:
+
+```powershell
+python scripts\narrow_filter_scan.py --config configs\our_clock.yaml --eta-over-gamma 6 --filter-chi-hz 1 --filter-beta-hz 0.1 --span-hz 200000 --step-hz 0.5 --random-starts 16
+```
+
 Full-layout no-coherence solve from a reduced branch seed:
 
 ```powershell
@@ -155,4 +169,4 @@ python scripts\pump_scale_continuation.py --config configs\paper_2021.yaml --eta
 
 The no-coherence full-layout residual matches the reduced equations and solves to the same high-photon paper branch. The clock configuration also has a reproducible narrow branch, selected by `minimum_linewidth`.
 
-The main remaining technical caveat is linewidth interpretation. Eq. (S43) gives the expected ultranarrow central linewidth, while the direct implicit Eq. (S42) root can return a much larger root. The broad plotted filter-cavity spectra are not sampled finely enough to measure Hz-scale FWHM directly; use `semianalytic_hz` for the central linewidth unless a dedicated high-resolution spectrum calculation is added.
+The main remaining technical caveat is linewidth interpretation. Eq. (S43) gives the expected ultranarrow central linewidth, while the direct implicit Eq. (S42) root can return a much larger root. The broad plotted filter-cavity spectra are not sampled finely enough to measure Hz-scale FWHM directly. A high-resolution narrow-filter test also returned a broad tens-of-kHz envelope rather than the `6.45 Hz` Eq. (S43) width, so the issue is not computational resolution alone. Use `semianalytic_hz` for the central linewidth unless a pole-based central-line extraction is used.

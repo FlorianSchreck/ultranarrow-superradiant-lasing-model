@@ -18,7 +18,7 @@ def compute_spectrum(config: RunConfig, state: ReducedSteadyState) -> SpectrumRe
     return compute_spectrum_compact(config, state)
 
 
-def compute_spectrum_compact(config: RunConfig, state: ReducedSteadyState) -> SpectrumResult:
+def compute_spectrum_compact(config: RunConfig, state: ReducedSteadyState, subtract_minimum: bool = True) -> SpectrumResult:
     spec = config.spectrum
     omega_f = np.linspace(spec.freq_min_hz, spec.freq_max_hz, spec.freq_points) * (2.0 * np.pi)
 
@@ -45,7 +45,8 @@ def compute_spectrum_compact(config: RunConfig, state: ReducedSteadyState) -> Sp
     denominator = chi * (tau * tau.conjugate() - (beta**4) / (chi**2))
     photons = np.real_if_close(numerator / denominator)
     photons = np.asarray(photons, dtype=float)
-    photons = photons - np.nanmin(photons)
+    if subtract_minimum:
+        photons = photons - np.nanmin(photons)
 
     return SpectrumResult(
         frequency_hz=omega_f / (2.0 * np.pi),

@@ -1,0 +1,2 @@
+eta_over_gamma,filter_chi_hz,filter_beta_hz,span_hz,step_hz,points,branches_found,branch_residual,photon_number,s43_linewidth_hz,raw_fwhm_hz,edge_baseline_subtracted_fwhm_hz,branch_seconds,spectrum_seconds,total_seconds
+6,1,0.1,200000,0.5,400001,8,1.06896252423e-06,355.966099535,6.45355199244,42752.5478152,50266.5802804,6.9243709,0.0824993999995,7.0198378
