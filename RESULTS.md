@@ -10,6 +10,7 @@ The main generated tables are:
 - `results/our_clock/frequency_sensitivity_eta_6p0.csv`
 - `results/our_clock/zeeman_scan_eta_6p0.csv`
 - `results/our_clock/atom_number_scan_eta_6p0.csv`
+- `results/our_clock/cavity_coupling_scan_N_2p2e05_eta_6p0.csv`
 - `results/our_clock/cavity_coupling_scan_N_2e06_eta_6p0.csv`
 
 ## Figure-3-Like Sweeps
@@ -123,6 +124,22 @@ The scan in `results/our_clock/cavity_coupling_scan_N_2e06_eta_6p0.csv` starts f
 The next halving to `g/2pi = 362.5 Hz` collapses to `n = 0.061`, so the scan stops there and does not report lasing linewidth or pulling for that point.
 
 Conclusion: reducing `g` helps at first. The best point in this coarse factor-of-two scan is near `g/2pi = 5.8 kHz`, where the linewidth is `0.699 Hz`, about `2.6x` narrower than the `N = 2e6` baseline. This does not reduce cavity pulling; the pulling remains near `0.014` for the first two halvings and then worsens. Below `g/2pi ~= 2.9 kHz`, the narrow-branch behavior degrades, and the peak-based pulling diagnostic should be treated as a regime-change flag rather than a useful small-signal pulling coefficient.
+
+## Cavity Coupling Scan at Current `N = 2.2e5`
+
+The scan in `results/our_clock/cavity_coupling_scan_N_2p2e05_eta_6p0.csv` repeats the same factor-of-two `g/2pi` reduction at the current atom number, `N = 2.2e5`.
+
+| `g/2pi` | Relative `g` | Linewidth | Cavity pulling | Photon number |
+|---:|---:|---:|---:|---:|
+| `23.2 kHz` | `1` | `6.45 Hz` | `0.01435` | `356` |
+| `11.6 kHz` | `1/2` | `8.22 Hz` | `0.01593` | `570` |
+| `5.80 kHz` | `1/4` | `679 Hz` | regime change | `800` |
+| `2.90 kHz` | `1/8` | `247 kHz` | regime change | `664` |
+| `1.45 kHz` | `1/16` | `348 kHz` | regime change | `70` |
+
+The next halving to `g/2pi = 725 Hz` collapses to `n = 0.0136`, so the scan stops there and does not report lasing linewidth or pulling for that point.
+
+Conclusion: at the present atom number, going deeper into the bad-cavity regime by reducing `g` is not helpful. The first halving already broadens the line from `6.45 Hz` to `8.22 Hz` and slightly increases pulling. The second halving no longer looks like the useful narrow branch, even though the steady-state photon number is still nonzero. This contrasts with the `N = 2e6` case, where larger collective coupling leaves room to reduce `g` by about `4x` before the linewidth optimum is passed.
 
 ## Cavity Pulling Interpretation
 

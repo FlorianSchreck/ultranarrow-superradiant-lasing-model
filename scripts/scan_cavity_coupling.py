@@ -54,7 +54,7 @@ def _pulling(config, eta_over_gamma, random_starts, max_residual, cavity_step_hz
 
 
 def _safe_number(value: float) -> str:
-    return f"{value:.0e}".replace("+", "").replace(".", "p")
+    return f"{value:.3g}".replace("+", "").replace(".", "p")
 
 
 def main() -> None:
