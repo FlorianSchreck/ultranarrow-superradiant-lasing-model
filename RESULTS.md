@@ -9,6 +9,7 @@ The main generated tables are:
 - `results/our_clock/cavity_pulling_eta_6p0.csv`
 - `results/our_clock/frequency_sensitivity_eta_6p0.csv`
 - `results/our_clock/zeeman_scan_eta_6p0.csv`
+- `results/our_clock/atom_number_scan_eta_6p0.csv`
 
 ## Figure-3-Like Sweeps
 
@@ -89,6 +90,21 @@ The scan in `results/our_clock/zeeman_scan_eta_6p0.csv` tests whether changing t
 | `2.38 G` | `5.0 MHz` | `380 kHz` | `0.350` | `153.3` |
 
 Conclusion: reducing B is not a useful path to a narrower line in the current model. The linewidth minimum is closer to `Delta/2pi = 350-400 kHz`, while the cavity pulling coefficient stays near `0.014` over the useful low-field range. Photon number increases through `Delta/2pi ~= 1 MHz`, but the linewidth has already grown by then. Above that, the selected branch no longer gives a narrow central line and the peak-based pulling diagnostic should be treated as a regime-change flag rather than a smooth low-field extrapolation. At very small `Delta/2pi = 50 kHz`, the calculation finds a poor regime with a very broad linewidth and anomalously large pulling.
+
+## Atom Number Scan
+
+The scan in `results/our_clock/atom_number_scan_eta_6p0.csv` varies the atom number of `configs/our_clock.yaml` at fixed `eta/gamma = 6`, `Delta/2pi = 300 kHz`, `g/2pi = 23.2 kHz`, and `kappa/2pi = 6.6 MHz`. The script uses atom-number continuation to stay on the same narrow branch while doubling `N`.
+
+| Atom number `N` | Linewidth | Cavity pulling | Photon number |
+|---:|---:|---:|---:|
+| `2.2e5` | `6.45 Hz` | `0.01435` | `356` |
+| `5.0e5` | `3.49 Hz` | `0.01427` | `626` |
+| `1.0e6` | `2.38 Hz` | `0.01431` | `1044` |
+| `2.0e6` | `1.81 Hz` | `0.01438` | `1811` |
+| `4.0e6` | `1.51 Hz` | `0.01445` | `3277` |
+| `8.0e6` | `1.34 Hz` | `0.01451` | `6149` |
+
+Over the requested `5e5` to `8e6` range, the Eq. (S43) linewidth decreases from `3.49 Hz` to `1.34 Hz`, roughly as `N^-0.34` between the endpoints. This is weaker than a pure `1/sqrt(N)` scaling, especially above `2e6` where the improvement starts to saturate. Including the current `2.2e5` baseline shows the same qualitative trend but with a steeper initial gain from the present operating point to `5e5`. The photon number increases strongly but sublinearly, roughly as `N^0.82` from `5e5` to `8e6`, so `n/N` decreases as `N` grows. The cavity-pulling coefficient does not follow a `1/N` trend here; it stays near `0.0143-0.0145` and increases slightly on this branch.
 
 ## Cavity Pulling Interpretation
 
