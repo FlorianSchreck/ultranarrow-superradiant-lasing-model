@@ -42,14 +42,6 @@ def parse_args() -> argparse.Namespace:
             2.0e6,
             3.0e6,
             5.0e6,
-            7.5e6,
-            10.0e6,
-            15.0e6,
-            20.0e6,
-            30.0e6,
-            40.0e6,
-            50.0e6,
-            63.0e6,
         ],
     )
     parser.add_argument("--cavity-step-hz", type=float, default=1000.0)
