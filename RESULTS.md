@@ -10,6 +10,7 @@ The main generated tables are:
 - `results/our_clock/frequency_sensitivity_eta_6p0.csv`
 - `results/our_clock/zeeman_scan_eta_6p0.csv`
 - `results/our_clock/atom_number_scan_eta_6p0.csv`
+- `results/our_clock/cavity_coupling_scan_N_2e06_eta_6p0.csv`
 
 ## Figure-3-Like Sweeps
 
@@ -105,6 +106,23 @@ The scan in `results/our_clock/atom_number_scan_eta_6p0.csv` varies the atom num
 | `8.0e6` | `1.34 Hz` | `0.01451` | `6149` |
 
 Over the requested `5e5` to `8e6` range, the Eq. (S43) linewidth decreases from `3.49 Hz` to `1.34 Hz`, roughly as `N^-0.34` between the endpoints. This is weaker than a pure `1/sqrt(N)` scaling, especially above `2e6` where the improvement starts to saturate. Including the current `2.2e5` baseline shows the same qualitative trend but with a steeper initial gain from the present operating point to `5e5`. The photon number increases strongly but sublinearly, roughly as `N^0.82` from `5e5` to `8e6`, so `n/N` decreases as `N` grows. The cavity-pulling coefficient does not follow a `1/N` trend here; it stays near `0.0143-0.0145` and increases slightly on this branch.
+
+## Cavity Coupling Scan at `N = 2e6`
+
+The scan in `results/our_clock/cavity_coupling_scan_N_2e06_eta_6p0.csv` starts from the `N = 2e6` atom-number-scan point and halves `g/2pi` at fixed `eta/gamma = 6`, `Delta/2pi = 300 kHz`, and `kappa/2pi = 6.6 MHz`. This is a proxy for moving deeper into the bad-cavity regime by reducing the atom-cavity coupling.
+
+| `g/2pi` | Relative `g` | Linewidth | Cavity pulling | Photon number |
+|---:|---:|---:|---:|---:|
+| `23.2 kHz` | `1` | `1.81 Hz` | `0.01438` | `1811` |
+| `11.6 kHz` | `1/2` | `0.872 Hz` | `0.01428` | `2505` |
+| `5.80 kHz` | `1/4` | `0.699 Hz` | `0.01459` | `3918` |
+| `2.90 kHz` | `1/8` | `1.55 Hz` | `0.02125` | `6173` |
+| `1.45 kHz` | `1/16` | `5.81 Hz` | regime change | `6705` |
+| `0.725 kHz` | `1/32` | `305 kHz` | regime change | `4665` |
+
+The next halving to `g/2pi = 362.5 Hz` collapses to `n = 0.061`, so the scan stops there and does not report lasing linewidth or pulling for that point.
+
+Conclusion: reducing `g` helps at first. The best point in this coarse factor-of-two scan is near `g/2pi = 5.8 kHz`, where the linewidth is `0.699 Hz`, about `2.6x` narrower than the `N = 2e6` baseline. This does not reduce cavity pulling; the pulling remains near `0.014` for the first two halvings and then worsens. Below `g/2pi ~= 2.9 kHz`, the narrow-branch behavior degrades, and the peak-based pulling diagnostic should be treated as a regime-change flag rather than a useful small-signal pulling coefficient.
 
 ## Cavity Pulling Interpretation
 
