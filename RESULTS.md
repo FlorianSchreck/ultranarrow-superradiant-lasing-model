@@ -69,19 +69,26 @@ The B-field, atom-number, and pump-rate fluctuations are not irrelevant; they mo
 
 ## Zeeman Splitting Scan
 
-The scan in `results/our_clock/zeeman_scan_eta_6p0.csv` tests whether reducing the B-field improves linewidth or cavity pulling at `eta/gamma = 6`.
+The scan in `results/our_clock/zeeman_scan_eta_6p0.csv` tests whether changing the B-field improves linewidth, cavity pulling, or photon number at `eta/gamma = 6`. The B-field values below use the `configs/our_clock.yaml` calibration `Delta/2pi = 2.1 MHz/G`.
 
-| `Delta/2pi` | Linewidth | Cavity pulling | Photon number |
-|---:|---:|---:|---:|
-| `150 kHz` | `13.16 Hz` | `0.01420` | `236.6` |
-| `200 kHz` | `8.89 Hz` | `0.01429` | `276.2` |
-| `250 kHz` | `7.22 Hz` | `0.01432` | `316.2` |
-| `300 kHz` | `6.45 Hz` | `0.01435` | `356.0` |
-| `350 kHz` | `6.13 Hz` | `0.01438` | `395.0` |
-| `400 kHz` | `6.06 Hz` | `0.01443` | `433.0` |
-| `500 kHz` | `6.45 Hz` | `0.01456` | `505.5` |
+| `B` | `Delta/2pi` | Linewidth | Cavity pulling | Photon number |
+|---:|---:|---:|---:|---:|
+| `0.071 G` | `150 kHz` | `13.16 Hz` | `0.01420` | `236.6` |
+| `0.095 G` | `200 kHz` | `8.89 Hz` | `0.01429` | `276.2` |
+| `0.119 G` | `250 kHz` | `7.22 Hz` | `0.01432` | `316.2` |
+| `0.143 G` | `300 kHz` | `6.45 Hz` | `0.01435` | `356.0` |
+| `0.167 G` | `350 kHz` | `6.13 Hz` | `0.01438` | `395.0` |
+| `0.190 G` | `400 kHz` | `6.06 Hz` | `0.01443` | `433.0` |
+| `0.238 G` | `500 kHz` | `6.45 Hz` | `0.01456` | `505.5` |
+| `0.286 G` | `600 kHz` | `7.45 Hz` | `0.01476` | `572.5` |
+| `0.381 G` | `800 kHz` | `12.34 Hz` | `0.01548` | `687.0` |
+| `0.476 G` | `1.0 MHz` | `29.70 Hz` | `0.01782` | `771.6` |
+| `0.714 G` | `1.5 MHz` | `365 kHz` | `1.253` | `831.4` |
+| `0.952 G` | `2.0 MHz` | `24.3 kHz` | `200.35` | `0.04` |
+| `1.43 G` | `3.0 MHz` | `2.22 MHz` | `0.580` | `830.1` |
+| `2.38 G` | `5.0 MHz` | `380 kHz` | `0.350` | `153.3` |
 
-Conclusion: reducing B is not a useful path to a narrower line in the current model. The linewidth minimum is closer to `Delta/2pi = 350-400 kHz`, while the cavity pulling coefficient stays near `0.014` over the useful range. At very small `Delta/2pi = 50 kHz`, the calculation finds a poor regime with a very broad linewidth and anomalously large pulling.
+Conclusion: reducing B is not a useful path to a narrower line in the current model. The linewidth minimum is closer to `Delta/2pi = 350-400 kHz`, while the cavity pulling coefficient stays near `0.014` over the useful low-field range. Photon number increases through `Delta/2pi ~= 1 MHz`, but the linewidth has already grown by then. Above that, the selected branch no longer gives a narrow central line and the peak-based pulling diagnostic should be treated as a regime-change flag rather than a smooth low-field extrapolation. At very small `Delta/2pi = 50 kHz`, the calculation finds a poor regime with a very broad linewidth and anomalously large pulling.
 
 ## Cavity Pulling Interpretation
 

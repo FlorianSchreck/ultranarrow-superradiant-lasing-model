@@ -167,4 +167,3 @@ Probe sensitivity to parameter conventions:
 ```powershell
 python scripts\convention_sensitivity.py --config configs\paper_2021.yaml --eta-over-gamma 5 --random-starts 8
 ```
-
