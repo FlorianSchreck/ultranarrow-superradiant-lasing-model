@@ -17,17 +17,15 @@ The main generated tables are:
 - `results/our_clock/cavity_coupling_scan_N_2p2e05_eta_6p0.csv`
 - `results/our_clock/cavity_coupling_scan_N_2e06_eta_6p0.csv`
 
-## Figure-3-Like Sweeps
+## Overview
 
-Paper calibration parameters:
-
-![Paper 2021 Figure-3-like sweep](results/paper_2021/figure3_like.png)
-
-Our clock parameters:
+Our clock parameters (overview similar to Fig. 3 of the paper):
 
 ![Our clock Figure-3-like sweep](results/our_clock/figure3_like.png)
 
 For `configs/our_clock.yaml`, the narrow-branch Eq. (S43) linewidth is minimized around `eta/gamma = 5-7`. The operating point `eta/gamma ~= 6` is therefore close to the broad optimum in this model.
+
+For verification of simulation, see the [calibration against the paper](#calibration-against-the-paper).
 
 ## Our Clock Operating Point
 
@@ -212,6 +210,10 @@ For `pulling = 0.01435` and `kappa/2pi = 6.6 MHz`, this gives an effective gain-
 ## Calibration Against The Paper
 
 The calibration target was Moelmer et al., especially the Figure 3 / Figure S4 narrow dark-state lasing branch and the Figure S5 cavity-pulling result.
+
+Figure 3 reproduction:
+
+![Paper 2021 Figure-3-like sweep](results/paper_2021/figure3_like.png)
 
 Important calibration steps:
 
