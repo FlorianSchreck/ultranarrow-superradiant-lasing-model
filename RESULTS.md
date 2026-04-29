@@ -89,69 +89,11 @@ Full `10 us`, vertical zoom to `3x` the steady-state photon number:
 
 ![Our clock realistic turn-on transient y zoom](results/our_clock/turn_on_transient_eta_6_mj_equal_mixture_yzoom.png)
 
-The realistic mixture still shows clear damped relaxation oscillations. The first reduced-model maxima are:
-
-| Peak time | Photon number |
-|---:|---:|
-| `0.115 us` | `5.94e4` |
-| `0.170 us` | `2.17e4` |
-| `0.220 us` | `7.87e3` |
-| `0.270 us` | `2.81e3` |
-| `0.320 us` | `968` |
-| `0.375 us` | `327` |
-| `0.430 us` | `105` |
-| `0.490 us` | `31.4` |
-
-The transient has almost relaxed after `10 us`: the reduced photon number is `379.48`, compared with the steady narrow-branch value `355.97`. The local-extremum counter finds `28` maxima and `27` minima in the first `10 us`.
+The realistic mixture shows clear damped relaxation oscillations. The transient has almost relaxed after `10 us`: the reduced photon number is `379.48`, compared with the steady narrow-branch value `355.97`. The local-extremum counter finds `28` maxima and `27` minima in the first `10 us`.
 
 The reduced and full mean-field traces are again essentially identical for this no-coherence initial condition. At `10 us`, the reduced result is `379.484806` photons and the full mean-field result is `379.484228` photons. The maximum absolute difference over the sampled trajectory is about `0.56` photons.
 
-For comparison, the earlier deliberately extreme all-bright initial condition can be reproduced with
-
-```text
-python scripts/turn_on_transient.py --config configs/our_clock.yaml --eta-over-gamma 6 --duration-us 10 --points 2001 --initial-state bright
-```
-
-This sets
-
-```text
-n(0) = 0
-A_bb(0) = 1
-A_gg(0) = A_dd(0) = A_bd(0) = 0
-```
-
-Full vertical range:
-
-![Our clock all-bright turn-on transient](results/our_clock/turn_on_transient_eta_6.png)
-
-First `1 us`:
-
-![Our clock all-bright turn-on transient first microsecond](results/our_clock/turn_on_transient_eta_6_first_1us.png)
-
-Full `10 us`, vertical zoom to `3x` the steady-state photon number:
-
-![Our clock all-bright turn-on transient y zoom](results/our_clock/turn_on_transient_eta_6_yzoom.png)
-
-The all-bright case has stronger relaxation oscillations. The first reduced-model maxima are:
-
-| Peak time | Photon number |
-|---:|---:|
-| `0.085 us` | `1.43e5` |
-| `0.125 us` | `6.63e4` |
-| `0.160 us` | `3.31e4` |
-| `0.195 us` | `1.64e4` |
-| `0.230 us` | `7.92e3` |
-| `0.265 us` | `3.93e3` |
-| `0.300 us` | `1.86e3` |
-| `0.335 us` | `920` |
-
-The all-bright transient has not fully relaxed after `10 us`: the reduced photon number is `436.49`, still above the steady narrow-branch value `355.97`. The local-extremum counter finds `37` maxima and `37` minima in the first `10 us`; late maxima near `7.45`, `7.96`, `8.48`, `9.00`, and `9.52 us` have photon numbers `834`, `708`, `605`, `530`, and `477`, respectively.
-
-For the all-bright case, the reduced result at `10 us` is `436.493991` photons and the full mean-field result is `436.493009` photons. The maximum absolute difference over the sampled trajectory is about `1.07` photons, compared with a first overshoot of `1.43e5` photons.
-
-These turn-on transients are useful regression tests for full-versus-reduced consistency in the no-optical-coherence sector.
-
-They are not complete validations of the full model. These tests start from diagonal excited-state preparations with zero optical coherences, and the reduced model is specifically built for that no-coherence manifold. A stronger comparison would also perturb optical coherences, seed different bright/dark superpositions, and test whether the full model returns to the reduced manifold or develops dynamics that the reduced variables cannot represent.
+Note: These turn-on transients are useful regression tests for full-versus-reduced consistency in the no-optical-coherence sector. They are not complete validations of the full model. These tests start from diagonal excited-state preparations with zero optical coherences, and the reduced model is specifically built for that no-coherence manifold. A stronger comparison would also perturb optical coherences, seed different bright/dark superpositions, and test whether the full model returns to the reduced manifold or develops dynamics that the reduced variables cannot represent.
 
 ## Frequency-Shift Sensitivities
 
