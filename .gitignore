@@ -26,6 +26,7 @@ results/**
 !results/paper_2021/*.csv
 !results/our_clock/
 !results/our_clock/figure3_like.png
+!results/our_clock/turn_on_transient_eta_6*.png
 !results/our_clock/figure3_sweep.npz
 !results/our_clock/*.csv
 

@@ -1,0 +1,3 @@
+model,steady_photon_number,final_photon_number,max_photon_number,time_of_max_us,local_maxima,local_minima
+reduced,355.966099535,379.48480603,59417.7104441,0.115,28,27
+full_meanfield,355.966099535,379.484228269,59417.908327,0.115,28,27
